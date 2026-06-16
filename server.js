@@ -1,14 +1,26 @@
 require('dotenv').config();
 
 const express = require('express');
+const compression = require('compression');
 const { engine } = require('express-handlebars');
 const path = require('path');
 const indexRoutes = require('./routes/index');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const SITE_URL = (process.env.SITE_URL || `http://localhost:${PORT}`).replace(/\/$/, '');
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(compression());
+app.use(
+  express.static(path.join(__dirname, 'public'), {
+    maxAge: process.env.NODE_ENV === 'production' ? '7d' : 0,
+    setHeaders(res, filePath) {
+      if (/\.(woff2|webp|png|jpg|svg|ico)$/.test(filePath)) {
+        res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+      }
+    },
+  })
+);
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
@@ -24,6 +36,14 @@ app.engine(
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'views'));
 
+app.use((req, res, next) => {
+  res.locals.siteUrl = SITE_URL;
+  res.locals.metaDescription =
+    'NA Dev Studio designs and develops modern websites and mobile apps for brands worldwide. Web development, mobile apps, UI/UX, and e-commerce — based in Lahore, Pakistan.';
+  res.locals.canonicalUrl = `${SITE_URL}${req.path === '/' ? '' : req.path}`;
+  next();
+});
+
 app.use('/', indexRoutes);
 
 if (!require('./utils/mailer').isEmailConfigured()) {
@@ -32,6 +52,10 @@ if (!require('./utils/mailer').isEmailConfigured()) {
   );
 }
 
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-});
+module.exports = app;
+
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
+  });
+}

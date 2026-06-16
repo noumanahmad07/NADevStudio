@@ -26,14 +26,22 @@
 
   <div class="hero-bottom-wrap">
     <div class="hero-showcase animate-fade-up">
-      <img
-        src="/images/hero-devices.png"
-        alt="Laptop and smartphone showcasing NA Dev Studio digital products"
-        class="hero-devices-img"
-        width="1536"
-        height="1024"
-        loading="eager"
-      >
+      <picture>
+        <source
+          srcset="/images/hero-devices-640.webp 640w, /images/hero-devices.webp 1280w"
+          sizes="(max-width: 768px) 100vw, 640px"
+          type="image/webp"
+        >
+        <img
+          src="/images/hero-devices.webp"
+          alt="Laptop and smartphone showcasing NA Dev Studio digital products"
+          class="hero-devices-img"
+          width="640"
+          height="427"
+          fetchpriority="high"
+          decoding="async"
+        >
+      </picture>
     </div>
 
     <div class="trust-bar">

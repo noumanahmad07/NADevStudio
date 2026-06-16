@@ -4,17 +4,49 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="{{metaDescription}}">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="{{canonicalUrl}}">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="{{title}} — Digital Solutions That Grow Your Business">
+  <meta property="og:description" content="{{metaDescription}}">
+  <meta property="og:url" content="{{canonicalUrl}}">
+  <meta property="og:site_name" content="NA Dev Studio">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="{{title}} — Digital Solutions That Grow Your Business">
+  <meta name="twitter:description" content="{{metaDescription}}">
   <title>{{title}} — Digital Solutions That Grow Your Business</title>
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png">
   <link rel="icon" type="image/png" sizes="192x192" href="/images/favicon-192.png">
   <link rel="apple-touch-icon" href="/images/favicon-192.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/style.css?v=16">
+  <link rel="preload" href="/fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/images/hero-devices-640.webp" as="image" type="image/webp" fetchpriority="high">
+  <link rel="stylesheet" href="/css/style.css?v=17">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "NA Dev Studio",
+    "description": "{{metaDescription}}",
+    "url": "{{canonicalUrl}}",
+    "email": "hello@nadevstudio.com",
+    "telephone": "+923715933395",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Lahore",
+      "addressCountry": "PK"
+    },
+    "areaServed": "Worldwide",
+    "sameAs": [
+      "https://www.facebook.com/profile.php?id=61590967071451",
+      "https://www.instagram.com/na_dev_studio"
+    ]
+  }
+  </script>
 </head>
 <body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
   {{{body}}}
-  <script src="/js/main.js"></script>
+  <script src="/js/main.js" defer></script>
 </body>
 </html>
