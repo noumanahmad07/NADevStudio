@@ -8,8 +8,8 @@ const indexRoutes = require('./routes/index');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const SITE_URL = (process.env.SITE_URL || `http://localhost:${PORT}`).replace(/\/$/, '');
 
+app.set('trust proxy', 1);
 app.use(compression());
 app.use(
   express.static(path.join(__dirname, 'public'), {
@@ -37,10 +37,13 @@ app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'views'));
 
 app.use((req, res, next) => {
-  res.locals.siteUrl = SITE_URL;
+  const proto = req.get('x-forwarded-proto') || req.protocol;
+  const host = req.get('x-forwarded-host') || req.get('host');
+  const siteUrl = (process.env.SITE_URL || `${proto}://${host}`).replace(/\/$/, '');
+  res.locals.siteUrl = siteUrl;
   res.locals.metaDescription =
     'NA Dev Studio designs and develops modern websites and mobile apps for brands worldwide. Web development, mobile apps, UI/UX, and e-commerce — based in Lahore, Pakistan.';
-  res.locals.canonicalUrl = `${SITE_URL}${req.path === '/' ? '' : req.path}`;
+  res.locals.canonicalUrl = `${siteUrl}${req.path === '/' ? '' : req.path}`;
   next();
 });
 
