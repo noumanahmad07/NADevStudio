@@ -1,0 +1,17 @@
+<section class="section faq-section" id="faq">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-eyebrow reveal">FAQ</div>
+      <h2 class="section-title reveal reveal-delay-1">Web Development Questions<br>Clients Ask Us</h2>
+      <p class="section-sub reveal reveal-delay-2">Answers about our website development, mobile app, and e-commerce services in Lahore and worldwide.</p>
+    </div>
+    <div class="faq-list reveal">
+      {{#each faqItems}}
+      <details class="faq-item">
+        <summary class="faq-question">{{question}}</summary>
+        <p class="faq-answer">{{answer}}</p>
+      </details>
+      {{/each}}
+    </div>
+  </div>
+</section>
