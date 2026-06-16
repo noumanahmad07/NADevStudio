@@ -6,22 +6,12 @@ const { engine } = require('express-handlebars');
 const path = require('path');
 const indexRoutes = require('./routes/index');
 
-const { applySeoLocals, buildSitemap, buildRobots } = require('./utils/seo');
+const { applySeoLocals } = require('./utils/seo');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.set('trust proxy', 1);
-
-app.get('/sitemap.xml', (req, res) => {
-  applySeoLocals(req, res);
-  res.type('application/xml').send(buildSitemap(res.locals.siteUrl));
-});
-
-app.get('/robots.txt', (req, res) => {
-  applySeoLocals(req, res);
-  res.type('text/plain').send(buildRobots(res.locals.siteUrl));
-});
 
 app.use(compression());
 app.use(
