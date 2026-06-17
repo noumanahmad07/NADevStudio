@@ -13,14 +13,17 @@ const PORT = process.env.PORT || 3000;
 
 app.set('trust proxy', 1);
 
-app.get('/sitemap.xml', (req, res) => {
+const sitemapPath = path.join(__dirname, 'public', 'sitemap', 'sitemap.xml');
+const robotsPath = path.join(__dirname, 'public', 'robots.txt');
+
+app.get(['/sitemap.xml', '/sitemap.xml/', '/sitemap/sitemap.xml'], (req, res) => {
   res.type('application/xml; charset=UTF-8');
-  res.sendFile(path.join(__dirname, 'public', 'sitemap.xml'));
+  res.sendFile(sitemapPath);
 });
 
 app.get('/robots.txt', (req, res) => {
   res.type('text/plain; charset=UTF-8');
-  res.sendFile(path.join(__dirname, 'public', 'robots.txt'));
+  res.sendFile(robotsPath);
 });
 
 app.use(compression());

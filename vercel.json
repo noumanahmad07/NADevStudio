@@ -1,5 +1,15 @@
 {
   "version": 2,
-  "builds": [{ "src": "server.js", "use": "@vercel/node" }],
-  "routes": [{ "src": "/(.*)", "dest": "server.js" }]
+  "builds": [
+    { "src": "server.js", "use": "@vercel/node" },
+    { "src": "public/**", "use": "@vercel/static" }
+  ],
+  "routes": [
+    { "src": "/sitemap/sitemap.xml", "dest": "/sitemap/sitemap.xml" },
+    { "src": "/sitemap.xml/", "dest": "/sitemap/sitemap.xml" },
+    { "src": "/sitemap.xml", "dest": "/sitemap/sitemap.xml" },
+    { "src": "/robots.txt", "dest": "/robots.txt" },
+    { "src": "/googlebfa0d949867bcab5.html", "dest": "/googlebfa0d949867bcab5.html" },
+    { "src": "/(.*)", "dest": "server.js" }
+  ]
 }
