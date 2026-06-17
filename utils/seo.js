@@ -48,11 +48,77 @@ const FAQ_ITEMS = [
   },
 ];
 
+const SITEMAP_URLS = [
+  { path: '/', priority: '1.0', changefreq: 'weekly' },
+  { path: '/about', priority: '0.9', changefreq: 'monthly' },
+  { path: '/services', priority: '0.9', changefreq: 'monthly' },
+  { path: '/portfolio', priority: '0.8', changefreq: 'monthly' },
+  { path: '/contact', priority: '0.9', changefreq: 'monthly' },
+  { path: '/privacy-policy', priority: '0.3', changefreq: 'yearly' },
+];
+
+const PAGE_SEO = {
+  home: {
+    path: '/',
+    title: PAGE_TITLE,
+    description: META_DESCRIPTION,
+    scrollSection: null,
+  },
+  about: {
+    path: '/about',
+    title: 'About Us | NA Dev Studio — Web Development Agency in Lahore',
+    description:
+      'Learn about NA Dev Studio, a Lahore-based web development and mobile app agency serving clients worldwide with custom digital products.',
+    scrollSection: 'why-us',
+  },
+  services: {
+    path: '/services',
+    title: 'Services | NA Dev Studio — Web, Mobile & E-Commerce Development',
+    description:
+      'Website development, mobile apps, full-stack web applications, UI/UX design, e-commerce solutions, and maintenance from NA Dev Studio in Lahore, Pakistan.',
+    scrollSection: 'services',
+  },
+  portfolio: {
+    path: '/portfolio',
+    title: 'Portfolio | NA Dev Studio — Web & Mobile App Projects',
+    description:
+      'Explore NA Dev Studio portfolio: e-commerce marketplaces, mobile apps, analytics platforms, and POS systems built for startups and businesses.',
+    scrollSection: 'portfolio',
+  },
+  contact: {
+    path: '/contact',
+    title: 'Contact | NA Dev Studio — Start Your Web or App Project',
+    description:
+      'Contact NA Dev Studio in Lahore, Pakistan. WhatsApp +92 371 5933395 or email hello@nadevstudio.com for website and mobile app projects.',
+    scrollSection: 'contact',
+  },
+  privacy: {
+    path: '/privacy-policy',
+    title: 'Privacy Policy | NA Dev Studio',
+    description:
+      'Privacy Policy for NA Dev Studio. How we collect, use, and protect your information when you visit our website or contact us.',
+    scrollSection: null,
+  },
+};
+
+function setPageSeo(req, res, pageKey) {
+  const page = PAGE_SEO[pageKey];
+  if (!page) return;
+
+  const siteUrl = res.locals.siteUrl;
+  const canonicalUrl = page.path === '/' ? siteUrl : `${siteUrl}${page.path}`;
+
+  res.locals.canonicalUrl = canonicalUrl;
+  res.locals.pageTitle = page.title;
+  res.locals.metaDescription = page.description;
+  res.locals.structuredData = buildStructuredData(siteUrl, canonicalUrl, page.title, page.description);
+}
+
 function applySeoLocals(req, res) {
   const proto = req.get('x-forwarded-proto') || req.protocol;
   const host = req.get('x-forwarded-host') || req.get('host');
   const siteUrl = (process.env.SITE_URL || `${proto}://${host}`).replace(/\/$/, '');
-  const canonicalUrl = `${siteUrl}${req.path === '/' ? '' : req.path}`;
+  const canonicalUrl = req.path === '/' ? siteUrl : `${siteUrl}${req.path}`;
 
   res.locals.siteUrl = siteUrl;
   res.locals.canonicalUrl = canonicalUrl;
@@ -62,10 +128,10 @@ function applySeoLocals(req, res) {
   res.locals.ogImage = `${siteUrl}/images/hero-devices-640.webp`;
   res.locals.googleSiteVerification = process.env.GOOGLE_SITE_VERIFICATION || '';
   res.locals.faqItems = FAQ_ITEMS;
-  res.locals.structuredData = buildStructuredData(siteUrl, canonicalUrl);
+  res.locals.structuredData = buildStructuredData(siteUrl, canonicalUrl, PAGE_TITLE, META_DESCRIPTION);
 }
 
-function buildStructuredData(siteUrl, canonicalUrl) {
+function buildStructuredData(siteUrl, canonicalUrl, pageTitle, pageDescription) {
   return {
     '@context': 'https://schema.org',
     '@graph': [
@@ -126,8 +192,8 @@ function buildStructuredData(siteUrl, canonicalUrl) {
         '@type': 'WebPage',
         '@id': `${canonicalUrl}#webpage`,
         url: canonicalUrl,
-        name: PAGE_TITLE,
-        description: META_DESCRIPTION,
+        name: pageTitle,
+        description: pageDescription,
         isPartOf: { '@id': `${siteUrl}/#website` },
         about: { '@id': `${siteUrl}/#localbusiness` },
         inLanguage: 'en',
@@ -150,16 +216,20 @@ function buildStructuredData(siteUrl, canonicalUrl) {
 
 function buildSitemap(siteUrl) {
   const lastmod = new Date().toISOString().split('T')[0];
-  const homepage = `${siteUrl.replace(/\/$/, '')}/`;
+  const base = siteUrl.replace(/\/$/, '');
+
+  const urls = SITEMAP_URLS.map(
+    (entry) => `  <url>
+    <loc>${entry.path === '/' ? `${base}/` : `${base}${entry.path}`}</loc>
+    <lastmod>${lastmod}</lastmod>
+    <changefreq>${entry.changefreq}</changefreq>
+    <priority>${entry.priority}</priority>
+  </url>`
+  ).join('\n');
 
   return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>${homepage}</loc>
-    <lastmod>${lastmod}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
+${urls}
 </urlset>
 `;
 }
@@ -174,8 +244,11 @@ Sitemap: ${siteUrl}/sitemap.xml
 
 module.exports = {
   applySeoLocals,
+  setPageSeo,
   buildSitemap,
   buildRobots,
+  SITEMAP_URLS,
+  PAGE_SEO,
   FAQ_ITEMS,
   META_DESCRIPTION,
   PAGE_TITLE,

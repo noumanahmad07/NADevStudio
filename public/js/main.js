@@ -53,12 +53,19 @@ document.querySelectorAll('a[href*="#"]').forEach((a) => {
   });
 });
 
-// Scroll to hash on page load (e.g. after form redirect)
-if (window.location.hash) {
-  window.addEventListener('load', () => {
+// Scroll to hash on page load (e.g. after form redirect or section routes)
+function scrollOnLoad() {
+  const section = document.body.dataset.scrollSection;
+  if (section) {
+    setTimeout(() => scrollToHash('#' + section), 100);
+    return;
+  }
+  if (window.location.hash) {
     setTimeout(() => scrollToHash(window.location.hash), 100);
-  });
+  }
 }
+
+window.addEventListener('load', scrollOnLoad);
 
 // Contact form (AJAX + fallback redirect alerts)
 const contactForm = document.getElementById('contactForm');
@@ -140,7 +147,7 @@ if (contactForm) {
         showFormAlert('success', data.message);
         setSubmitState(btn, 'success', "✓ Message Sent! We'll reply within 24h.");
         contactForm.reset();
-        history.replaceState(null, '', '/#contact');
+        history.replaceState(null, '', '/contact');
         contactForm.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         return;
       }
@@ -165,7 +172,7 @@ function handleFormAlerts() {
   if (params.get('sent') === 'true') {
     showFormAlert('success', "Message sent successfully! We'll get back to you within 24 hours.");
     setSubmitState(submitBtn, 'success', "✓ Message Sent! We'll reply within 24h.");
-    history.replaceState(null, '', '/#contact');
+    history.replaceState(null, '', '/contact');
   }
 
   if (params.get('error')) {
@@ -175,7 +182,7 @@ function handleFormAlerts() {
     };
     showFormAlert('error', messages[params.get('error')] || messages.validation);
     setSubmitState(submitBtn, 'idle', 'Send Message →');
-    history.replaceState(null, '', '/#contact');
+    history.replaceState(null, '', '/contact');
   }
 }
 

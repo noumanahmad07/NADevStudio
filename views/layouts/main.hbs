@@ -31,10 +31,10 @@
   <link rel="apple-touch-icon" href="/images/favicon-192.png">
   <link rel="preload" href="/fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/images/hero-devices-640.webp" as="image" type="image/webp" fetchpriority="high">
-  <link rel="stylesheet" href="/css/style.css?v=18">
+  <link rel="stylesheet" href="/css/style.css?v=19">
   <script type="application/ld+json">{{{json structuredData}}}</script>
 </head>
-<body>
+<body{{#if scrollSection}} data-scroll-section="{{scrollSection}}"{{/if}}>
   <a class="skip-link" href="#main-content">Skip to content</a>
   {{{body}}}
   <script src="/js/main.js" defer></script>

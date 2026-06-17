@@ -376,6 +376,14 @@ nav#navbar{
   border:1px solid var(--border);
 }
 
+/* LEGAL */
+.legal-page{padding:calc(var(--nav-h) + 3rem) 1.5rem 4rem}
+.legal-content{max-width:42rem;margin:0 auto;text-align:left}
+.legal-content h2{font-size:1.125rem;font-weight:600;margin:1.75rem 0 .75rem;letter-spacing:-.02em}
+.legal-content p{font-size:.9375rem;color:var(--muted);line-height:1.75;margin-bottom:1rem}
+.legal-content a{color:var(--foreground);text-decoration:underline;text-underline-offset:2px}
+.legal-back{margin-top:2.5rem}
+
 /* FAQ */
 .faq-section{background:var(--background)}
 .faq-list{max-width:42rem;margin:0 auto;display:grid;gap:.75rem}
