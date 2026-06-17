@@ -62,42 +62,36 @@ const PAGE_SEO = {
     path: '/',
     title: PAGE_TITLE,
     description: META_DESCRIPTION,
-    scrollSection: null,
   },
   about: {
     path: '/about',
     title: 'About Us | NA Dev Studio — Web Development Agency in Lahore',
     description:
-      'Learn about NA Dev Studio, a Lahore-based web development and mobile app agency serving clients worldwide with custom digital products.',
-    scrollSection: 'why-us',
+      'Meet NA Dev Studio — a Lahore-based web development and mobile app agency with 50+ projects delivered. We build custom digital products for startups and businesses in Pakistan and worldwide.',
   },
   services: {
     path: '/services',
     title: 'Services | NA Dev Studio — Web, Mobile & E-Commerce Development',
     description:
-      'Website development, mobile apps, full-stack web applications, UI/UX design, e-commerce solutions, and maintenance from NA Dev Studio in Lahore, Pakistan.',
-    scrollSection: 'services',
+      'Website development, mobile apps, full-stack web applications, UI/UX design, e-commerce solutions, and maintenance. Custom digital products from NA Dev Studio in Lahore, Pakistan.',
   },
   portfolio: {
     path: '/portfolio',
     title: 'Portfolio | NA Dev Studio — Web & Mobile App Projects',
     description:
-      'Explore NA Dev Studio portfolio: e-commerce marketplaces, mobile apps, analytics platforms, and POS systems built for startups and businesses.',
-    scrollSection: 'portfolio',
+      'Case studies: ShopFlow marketplace, HealthTrack Pro mobile app, DataLens analytics, and OrderEase POS — web and mobile projects built by NA Dev Studio for clients worldwide.',
   },
   contact: {
     path: '/contact',
     title: 'Contact | NA Dev Studio — Start Your Web or App Project',
     description:
-      'Contact NA Dev Studio in Lahore, Pakistan. WhatsApp +92 371 5933395 or email hello@nadevstudio.com for website and mobile app projects.',
-    scrollSection: 'contact',
+      'Contact NA Dev Studio in Lahore, Pakistan. WhatsApp +92 371 5933395 or email hello@nadevstudio.com. Get a project quote within 24 hours.',
   },
   privacy: {
     path: '/privacy-policy',
     title: 'Privacy Policy | NA Dev Studio',
     description:
       'Privacy Policy for NA Dev Studio. How we collect, use, and protect your information when you visit our website or contact us.',
-    scrollSection: null,
   },
 };
 

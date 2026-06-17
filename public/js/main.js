@@ -37,17 +37,20 @@ document.querySelectorAll('a[href*="#"]').forEach((a) => {
     const hashMatch = href.match(/#(.+)$/);
     if (!hashMatch) return;
 
-    const isInternal =
-      href.startsWith('#') ||
-      href.startsWith('/#') ||
-      (href.startsWith('/') && !href.includes('://'));
+    const id = hashMatch[1];
+    const hash = '#' + id;
+    const target = document.getElementById(id);
+    const onHomepage = window.location.pathname === '/';
 
-    if (isInternal) {
+    if (href.startsWith('#') && target) {
       e.preventDefault();
-      const hash = '#' + hashMatch[1];
-      if (window.location.pathname === '/' || href.startsWith('/#')) {
-        history.replaceState(null, '', '/' + hash);
-      }
+      scrollToHash(hash);
+      return;
+    }
+
+    if (onHomepage && target && href.startsWith('/#')) {
+      e.preventDefault();
+      history.replaceState(null, '', '/' + hash);
       scrollToHash(hash);
     }
   });

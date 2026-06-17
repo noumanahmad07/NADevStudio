@@ -1,40 +1,35 @@
 const express = require('express');
 const router = express.Router();
 const contactController = require('../controllers/contactController');
-const { setPageSeo, PAGE_SEO } = require('../utils/seo');
+const { setPageSeo } = require('../utils/seo');
 
-function renderHomePage(req, res, pageKey) {
+function renderPage(req, res, pageKey, view) {
   setPageSeo(req, res, pageKey);
-  const page = PAGE_SEO[pageKey];
-  res.render('index', {
-    title: 'NA Dev Studio',
-    scrollSection: page.scrollSection,
-  });
+  res.render(view, { title: 'NA Dev Studio' });
 }
 
 router.get('/', (req, res) => {
-  renderHomePage(req, res, 'home');
+  renderPage(req, res, 'home', 'index');
 });
 
 router.get('/about', (req, res) => {
-  renderHomePage(req, res, 'about');
+  renderPage(req, res, 'about', 'about');
 });
 
 router.get('/services', (req, res) => {
-  renderHomePage(req, res, 'services');
+  renderPage(req, res, 'services', 'services');
 });
 
 router.get('/portfolio', (req, res) => {
-  renderHomePage(req, res, 'portfolio');
+  renderPage(req, res, 'portfolio', 'portfolio');
 });
 
 router.get('/contact', (req, res) => {
-  renderHomePage(req, res, 'contact');
+  renderPage(req, res, 'contact', 'contact');
 });
 
 router.get('/privacy-policy', (req, res) => {
-  setPageSeo(req, res, 'privacy');
-  res.render('privacy-policy', { title: 'NA Dev Studio' });
+  renderPage(req, res, 'privacy', 'privacy-policy');
 });
 
 router.post('/contact', contactController.sendMessage);
