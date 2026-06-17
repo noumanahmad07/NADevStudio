@@ -5,11 +5,11 @@
     { "src": "public/**", "use": "@vercel/static" }
   ],
   "routes": [
-    { "src": "/sitemap/sitemap.xml", "dest": "/sitemap/sitemap.xml" },
-    { "src": "/sitemap.xml/", "dest": "/sitemap/sitemap.xml" },
-    { "src": "/sitemap.xml", "dest": "/sitemap/sitemap.xml" },
-    { "src": "/robots.txt", "dest": "/robots.txt" },
-    { "src": "/googlebfa0d949867bcab5.html", "dest": "/googlebfa0d949867bcab5.html" },
+    { "src": "/sitemap/sitemap.xml", "dest": "/public/sitemap/sitemap.xml" },
+    { "src": "/sitemap.xml/", "dest": "/public/sitemap/sitemap.xml" },
+    { "src": "/sitemap.xml", "dest": "/public/sitemap/sitemap.xml" },
+    { "src": "/robots.txt", "dest": "/public/robots.txt" },
+    { "src": "/googlebfa0d949867bcab5.html", "dest": "/public/googlebfa0d949867bcab5.html" },
     { "src": "/(.*)", "dest": "server.js" }
   ]
 }
