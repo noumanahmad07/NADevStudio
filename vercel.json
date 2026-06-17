@@ -1,14 +1,13 @@
 {
   "version": 2,
   "builds": [
+    { "src": "api/**/*.js", "use": "@vercel/node" },
     { "src": "server.js", "use": "@vercel/node" },
     { "src": "public/**", "use": "@vercel/static" }
   ],
   "routes": [
-    { "src": "/sitemap/sitemap.xml", "dest": "/public/sitemap/sitemap.xml" },
-    { "src": "/sitemap.xml/", "dest": "/public/sitemap/sitemap.xml" },
-    { "src": "/sitemap.xml", "dest": "/public/sitemap/sitemap.xml" },
-    { "src": "/robots.txt", "dest": "/public/robots.txt" },
+    { "src": "/sitemap.xml", "dest": "/api/sitemap.js" },
+    { "src": "/robots.txt", "dest": "/api/robots.js" },
     { "src": "/googlebfa0d949867bcab5.html", "dest": "/public/googlebfa0d949867bcab5.html" },
     { "src": "/(.*)", "dest": "server.js" }
   ]
